@@ -1,0 +1,230 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Solicitud</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="solicitud">
+        <h2>Editar Solicitud</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'editar_solicitud' %}" method="POST" id="miFormulario">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ solicitudCompra.id }}">
+                    <input type="hidden" name="productos" id="productos">
+
+                    <div class="form-container">
+                        <div class="form-solicitud">
+                            <label for="referencia">Referencia:</label>
+                            <input type="text" id="referencia" name="referencia" value="{{ solicitudCompra.referencia }}" readonly>
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="proveedores">Proveedores:</label>
+                            <select id="proveedores" name="proveedores" required>
+                                {% for proveedor in proveedores %}
+                                    <option value="{{ proveedor.id }}" {% if proveedor.id == solicitudCompra.proveedores.id %}selected{% endif %}>{{ proveedor.nombre_proveedor }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="comprador">Comprador:</label>
+                            <input type="text" id="comprador" name="comprador" value="{{ solicitudCompra.comprador }}">
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="estado">Estado:</label>
+                            <select id="estado" name="estado">
+                                <option value="Solicitud de compra" {% if solicitudCompra.estado == "Solicitud de compra" %}selected{% endif %}>Solicitud Compra</option>
+                                <option value="Orden de compra" {% if solicitudCompra.estado == "Orden de compra" %}selected{% endif %}>Orden de compra</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="form-solicitud">
+                            <label for="fecha_de_espera">Fecha de espera:</label>
+                            <input type="date" id="fecha_de_espera" name="fecha_de_espera" value="{{ solicitudCompra.fecha_de_espera }}" required> 
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="fecha_creacion">Fecha de creación:</label>
+                            <input type="text" id="fecha_creacion" name="fecha_creacion" value="{{ solicitudCompra.fecha_creacion }}" readonly>
+                        </div>
+                        <div class="form-solicitud">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MaterialesModal">Agregar Producto</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Productos Seleccionados</h4>
+                        <table class="table table-bordered" id="productosSeleccionados">
+                            <thead>
+                                <tr>
+                                    <th># ID</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Stock</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los productos seleccionados se actualizarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar Solicitud</button>
+                    <a href="{% url 'solicitudCompra' %}" class="btn btn-secondary">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar productos -->
+    <div id="MaterialesModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="MaterialesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="MaterialesModalLabel">Agregar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                                <th>Agregar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos_lista %}
+                            <tr>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.nombre_producto }}</td>
+                                <td>{{ producto.descripcion_producto }}</td>
+                                <td>{{ producto.stock_producto }}</td>
+                                <td>${{ producto.precio_producto }}</td>
+                                <td>
+                                    <button class="btn btn-success" onclick="addProduct('{{ producto.id }}', '{{ producto.nombre_producto }}', '{{ producto.descripcion_producto }}', '{{ producto.stock_producto }}', '{{ producto.precio_producto }}')">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    // Variable para almacenar los productos seleccionados
+    let productosSeleccionados = [];
+
+    // Función para actualizar la tabla de productos seleccionados
+    function actualizarTabla() {
+        const tableBody = document.getElementById('productosSeleccionados').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+
+        productosSeleccionados.forEach((producto, index) => {
+            const row = tableBody.insertRow();
+            row.insertCell(0).textContent = producto.id;
+            row.insertCell(1).textContent = producto.nombre;
+            row.insertCell(2).textContent = producto.descripcion;
+            row.insertCell(3).textContent = producto.stock;
+            row.insertCell(4).textContent = '$' + producto.precio.toFixed(2);
+            const cantidadCell = row.insertCell(5);
+            const cantidadInput = document.createElement('input');
+            cantidadInput.type = 'number';
+            cantidadInput.value = producto.cantidad;
+            cantidadInput.min = '1';
+            cantidadInput.addEventListener('change', function() {
+                const nuevaCantidad = parseInt(this.value);
+                const stockDisponible = producto.stock;
+                if (nuevaCantidad <= stockDisponible) {
+                    producto.cantidad = nuevaCantidad;
+                    producto.subtotal = producto.precio * nuevaCantidad;
+                } else {
+                    alert('No hay suficiente stock disponible');
+                    this.value = producto.cantidad;
+                }
+                actualizarTabla();
+            });
+            cantidadCell.appendChild(cantidadInput);
+            row.insertCell(6).textContent = '$' + producto.subtotal.toFixed(2);
+            const actionsCell = row.insertCell(7);
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteButton.onclick = () => {
+                productosSeleccionados.splice(index, 1);
+                actualizarTabla();
+            };
+            actionsCell.appendChild(deleteButton);
+        });
+    }
+
+    // Función para agregar un producto a los productos seleccionados
+    function addProduct(id, nombre, descripcion, stock, precio) {
+        const cantidad = 1;
+
+        // Verificar si el producto ya está en la lista de productos seleccionados
+        const productoExistente = productosSeleccionados.find(producto => producto.id === parseInt(id));
+        if (productoExistente) {
+            alert('El producto ya está en la lista. Actualiza la cantidad directamente en la tabla.');
+            return;
+        }
+
+        const producto = {
+            id: parseInt(id),
+            nombre: nombre,
+            descripcion: descripcion,
+            stock: parseInt(stock),
+            precio: parseFloat(precio),
+            cantidad: cantidad,
+            subtotal: parseFloat(precio) * cantidad
+        };
+
+        productosSeleccionados.push(producto);
+        actualizarTabla();
+
+        $('#MaterialesModal').modal('hide');
+    }
+
+    // Inicializar la tabla de productos seleccionados
+    window.addEventListener('DOMContentLoaded', (event) => {
+        productosSeleccionados = JSON.parse('{{ productos_seleccionados|escapejs }}');
+        actualizarTabla();
+    });
+
+    // Enviar datos al backend cuando se envía el formulario
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evitar el envío del formulario por defecto
+        document.getElementById('productos').value = JSON.stringify(productosSeleccionados);
+        this.submit(); // Enviar el formulario manualmente
+    });
+</script>
+{% endblock %}

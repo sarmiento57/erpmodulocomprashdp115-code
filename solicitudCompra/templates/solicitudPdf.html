@@ -1,0 +1,102 @@
+
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col">
+            <h2 class="text-center mb-4">Detalles de la Solicitud</h2>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Referencia:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.referencia }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Proveedor:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.proveedores.nombre_proveedor }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Comprador:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.comprador }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Estado:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.estado }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Fecha de Espera:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.fecha_de_espera }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Fecha de Creación:</label>
+                <div class="col-sm-9">
+                    <div class="form-control">{{ solicitudCompra.fecha_creacion }}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <h4>Productos Seleccionados</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in solicitudCompra.productosolicitud_set.all %}
+                            <tr>
+                                <td>{{ producto.producto.id }}</td>
+                                <td>{{ producto.producto.nombre_producto }}</td>
+                                <td>{{ producto.producto.descripcion_producto }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                                <td>${{ producto.producto.precio_producto }}</td>
+                                <td>${{ producto.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #dddddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+</style>
+{% endblock content %}

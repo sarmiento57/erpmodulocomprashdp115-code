@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">  
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">                   
+                    <!-- esto se va cambiar al nombre de la url que se cree en views para las solicitudes igual al del proveedor -->
+                    <li class="nav-item {% if en_solicitud or request.path == '/solicitudCompra/' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'solicitudCompra' %}">Solicitud de compra</a>
+                    </li>                                    
+                    <li class="nav-item {% if request.path == '/proveedor/' or en_proveedor %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'proveedor' %}">Proveedor</a>
+                    </li>                                   
+                    <li class="nav-item {% if request.path == '/ordenCompra/' or en_orden_compra %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'ordenCompra' %}">Orden de Compra</a>
+                    </li>                  
+                    <li class="nav-item {% if request.path == '/producto/' or en_producto %}active{% endif %}">
+                        <a a class="nav-link" href="{% url 'producto' %}">Producto</a>
+                    </li>
+                </ul>
+                <div class="derecha">
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid #ddd; padding: 5px 10px; border-radius: 5px; background-color: #f8f9fa;">
+                                <i class="fas fa-user fa-fw"></i> {{ user.first_name|slice:"1" }}{{ user.last_name|slice:"1" }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <p class="dropdown-item"><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                                </li>
+                                <li>
+                                    <p class="dropdown-item"><strong>Email:</strong> {{ user.email }}</p>
+                                </li>
+                                <li>
+                                    <p class="dropdown-item"><strong>Grupos:</strong></p>
+                                    <ul class="list-unstyled ms-3">
+                                        {% for group in user.groups.all %}
+                                        <li>{{ group.name }}</li>
+                                        {% empty %}
+                                        <li>No pertenece a ningún grupo</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" class="dropdown-item p-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-link p-0"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>        
+                    {% else %}
+                    <form action="{% url 'login' %}" method="get">
+                        <button type="submit" class="btn">Iniciar sesion</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/f2e5530158.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    {% if messages %}
+    {% for m in messages %}
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: "Felicitaciones",
+            text: '{{m}}',
+        })
+    </script>
+    {% endfor %}  
+    {% endif %}
+
+</body>
+</html>
+

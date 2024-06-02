@@ -1,0 +1,43 @@
+{% load static %}
+{% block content %}
+<div class="modal fade" id="crearProductoModal" tabindex="-1" aria-labelledby="crearProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearProductoModalLabel">Detalles Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{error}}
+                <form id="formularioProducto" action="/editarProducto/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{producto.id}}">
+                    <div class="form-group">
+                        <label for="nombre_producto">Nombre:</label>
+                        <div id="nombre_producto" class="form-control">{{producto.nombre_producto}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock_producto">Stock:</label>
+                        <div id="stock_producto" class="form-control">{{producto.stock_producto}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria_producto">Categoria:</label>
+                        <div id="categoria_producto" class="form-control">{{producto.categoria_producto}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio_producto">Precio:</label>
+                        <div id="precio_producto" class="form-control">{{producto.precio_producto}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion_producto">Descripcion:</label>
+                        <div id="descripcion_producto" class="form-control">{{producto.descripcion_producto}}</div>
+                    </div>
+                    <div class="form-group">
+                        <a href="{% url 'producto' %}" class="btn btn-primary">Cerrar</a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

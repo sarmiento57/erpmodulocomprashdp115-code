@@ -1,0 +1,70 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<div class="solicitud">
+    <h2>Registrar Factura</h2>
+    <div class="card">
+        <div class="card-body">
+            {% if factura.factura_registrada %}
+                                <p class="alert alert-success">Pago registrado</p>
+                            {% else %}
+                                <p class="alert alert-warning">Pago no registrado</p>
+                            {% endif %}
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endif %}
+            <form method="post" id="formulario" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="form-solicitud">
+                        <label for="id_solicitud" class="form-label">Orden:</label>
+                        {{ form.solicitud }}
+                    </div>
+                    <div class="form-solicitud">
+                        <button type="submit" {% if factura.factura_registrada %}disabled{% endif %}>Registrar Pago</button>
+                        <a href="{% url 'generarPago' orden_id=orden.id %}"><button type="button">Volver</button></a>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-solicitud">                     
+                        <label for="id_fecha_contable" class="form-label">Fecha factura:</label>
+                        <input type="text" value="{{orden.fecha_factura }}">          
+                    </div>
+                    <div class="form-solicitud">
+                        <label for="id_fecha_contable" class="form-label">Fecha contable:</label>
+                        <input type="text" value="{{orden.fecha_contable }}">
+                    </div>
+                    <div class="form-solicitud">
+                        <label for="id_total_orden" class="form-label">Total Importe:</label>
+                        <input type="text" value="${{orden.total_orden }}">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-solicitud">
+                        <label for="id_diario" class="form-label">Diario:</label>
+                        {{ form.diario }}
+                    </div>
+                    <div class="form-solicitud">
+                        <label for="id_metodo_pago" class="form-label">Método de pago:</label>
+                        {{ form.metodo_pago }}
+                    </div>
+                    <div class="form-solicitud" id="cuenta-bancaria-div">
+                        <label for="id_cuenta_bancaria" class="form-label">Cuenta bancaria:</label>
+                        {{ form.cuenta_bancaria }}
+                    </div>
+                </div>      
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/factura.js' %}"></script>
+{% endblock content %}
+
+
+
+
+
+

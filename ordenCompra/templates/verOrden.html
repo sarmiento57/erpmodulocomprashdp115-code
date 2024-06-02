@@ -1,0 +1,102 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+
+<div class="solicitud">
+    <h2>Detalles de pago</h2>
+    <div class="card">
+        <div class="img-pagado">
+            {% if factura and factura.factura_registrada %}
+                <img src="{% static 'pagado.png' %}" alt="Pagado">
+            {% else %}
+                <img src="{% static 'sin-pagar.png' %}" alt="Pagado">
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form method="post" id="formulario" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="form-solicitud">
+                        <label for="id_solicitud" class="form-label">Orden de compra:</label>
+                        <input type="text" value="{{ orden.solicitud }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-solicitud">
+                        <label for="id_comprador" class="form-label">Comprador:</label>
+                        <input type="text" value="{{ solicitud.comprador }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-solicitud">
+                        <a href="{% url 'ordenCompra' %}">
+                            <button type="button">Volver</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-solicitud mb-3">
+                        <label for="proveedor" class="form-label">Detalles del proveedor:</label>
+                        <p>Proveedor: {{ proveedor.nombre_proveedor }}</p>
+                        <p>Contacto: {{ proveedor.contacto_proveedor }}</p>
+                        <p>Teléfono: {{ proveedor.telefono_proveedor }}</p>
+                        <p>Correo: {{ proveedor.email_proveedor }}</p>
+                    </div>
+                    <div class="form-solicitud mb-3">
+                        <label for="id_fecha_factura" class="form-label">Fecha de Factura:</label>
+                        <input type="text" name="fecha_factura" value="{{ orden.fecha_factura }}" class="form-control" required>
+                    </div>
+                    <div class="form-solicitud mb-3">
+                        <label for="id_fecha_contable" class="form-label">Fecha Contable:</label>
+                        <input type="text" name="fecha_contable" value="{{ orden.fecha_contable }}" class="form-control" required>
+                    </div>
+                    <div class="form-solicitud mb-3">
+                        <label for="id_banco_receptor" class="form-label">Banco Receptor:</label>
+                        <input type="text" name="banco_receptor" value="{{ orden.banco_receptor }}" class="form-control" required>
+                    </div>
+                    <div class="form-solicitud">
+                        <label for="total_orden" class="form-label">Total Importe:</label>
+                        <input type="text" name="total_orden" value="{{ orden.total_orden }}" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-group">
+                        <h4>Productos Agregados</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th># ID</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Subtotal</th>
+                                    <th>Recibido</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto_solicitud in solicitud.productosolicitud_set.all %}
+                                <tr>
+                                    <td>{{ producto_solicitud.producto.id }}</td>
+                                    <td>{{ producto_solicitud.producto.nombre_producto }}</td>
+                                    <td>{{ producto_solicitud.producto.descripcion_producto }}</td>
+                                    <td>{{ producto_solicitud.cantidad }}</td>
+                                    <td>${{ producto_solicitud.producto.precio_producto }}</td>
+                                    <td>${{ producto_solicitud.subtotal }}</td>
+                                    <td>
+                                        <input type="number" name="cantidad_recibida_{{ producto_solicitud.id }}" value="{{ producto_solicitud.cantidad_recibida }}" class="form-control" step="0.01" readonly >
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>  
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

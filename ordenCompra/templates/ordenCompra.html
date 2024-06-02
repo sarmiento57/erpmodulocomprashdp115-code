@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="contenedor">
+    <form method="GET" action="{% url 'buscarOrdenCompra' %}">
+        <button type="submit" class=" btn btn-primary">Buscar</button>
+        <input type="text" name="q" placeholder="Estado y Referencia" value="{{ request.GET.q }}" class="form-control">    
+    </form>
+</div>
+<div class="titulo">
+   <h2>Listado de Ordenes de Compra</h2>
+</div>
+<body>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Referencia</th>
+            <th>Comprador</th>
+            <th>Proveedor</th>
+            <th>Estado</th>
+            <th>Fecha de Factura</th>
+            <th>Total</th>
+            <th>Fecha de Espera</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in solicitudes %}
+        <tr>
+            <td>{{ c.referencia }}</td>
+            <td>{{ c.comprador }}</td>
+            <td>{{ c.proveedores }}</td>
+            <td>{{ c.estado }}</td>
+            <td>
+                {% for orden in ordenes %}
+                    {% if orden.solicitud_id == c.id %}
+                        {{ orden.fecha_factura }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for orden in ordenes %}
+                    {% if orden.solicitud_id == c.id %}
+                        ${{ orden.total_orden }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ c.fecha_de_espera }}</td>
+            <td>
+                
+                {% for orden in ordenes %}
+                    {% if orden.solicitud_id == c.id %}
+                        <a href="{% url 'verOrden' orden.id %}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+
+                        <a href="{% url 'generarPago' orden.id %}" class="btn btn-success"><i class="fa-solid fa-cart-shopping"></i></a>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    
+</div>   
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!--se agrega la libreria de sweetAlert2-->
+</body>    
+{% endblock %}

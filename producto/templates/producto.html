@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="contenedor">
+    <form method="GET" action="{% url 'buscarProducto' %}">
+        <button type="submit" class=" btn btn-primary">Buscar</button>
+        <input type="text" name="q" placeholder="Nombre y Categoria" value="{{ request.GET.q }}" class="form-control">    
+    </form>
+    <a href="#" class="btn btn-primary crearProductoBtn" data-url="{% url 'crearProducto' %}">Agregar Producto</a>
+</div>
+    <style>
+        .descripcion {
+          width: 450px; 
+          word-wrap: break-word; 
+          white-space: pre-wrap; 
+        }
+        .nombre {
+          width: 30px; 
+          word-wrap: break-word; 
+          white-space: pre-wrap; 
+        }
+      </style>
+        <div class="titulo">
+          <h2>Listado de Productos</h2>
+        </div>
+    <body>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th><!-- cabezera de las tablas-->
+                        <th>Nombre</th> <!-- cabezera de las tablas-->
+                        <th>Stock</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                        <th>Descripcion</th>
+                       <th colspan="2">Acciones</th>
+                    </tr>
+                    <tbody>
+                        {% for c in productos %}<!--ciclo para recorrer la tabla y mostrar los productos-->
+                        <tr>
+                            <td>{{ forloop.counter }} <!--se muestran los datos de los productos-->
+                            <td class="nombre">{{ c.nombre_producto}}</td> <!--se muestran los datos de los productos-->
+                            <td>{{ c.stock_producto}}</td>
+                            <td>{{ c.categoria_producto }}</td>
+                            <td>${{ c.precio_producto }}</td>
+                            <td class="descripcion">{{ c.descripcion_producto }}</td>
+                            
+                            <td>
+                                <a href="#" class="btn btn-info verProductoBtn" data-url="{% url 'verProducto' c.id %}"><i class="fa-solid fa-eye"></i></a>
+
+                                <a href="#" class="btn btn-success editarProductoBtn" data-url="{% url 'edicionProducto' c.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                        
+                                <a href="{% url 'eliminarProducto' c.id%}" class="btn btn-danger" onclick="return confirm('¿Estás seguro que quieres eliminarlo?')"><i class="fa-solid fa-trash"></i></a> <!--boton para eliminar un producto-->
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+            </table>
+        </div>   
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{% static 'js/modal.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+       
+    
+    </body>    
+
+
+{% endblock %}
+

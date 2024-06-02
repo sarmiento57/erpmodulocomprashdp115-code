@@ -1,0 +1,80 @@
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #dddddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col">
+            <h2 class="text-center mb-4">Detalles de Pago</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <p><strong>Orden de compra:</strong> {{ orden.solicitud }}</p>
+            <p><strong>Comprador:</strong> {{ solicitud.comprador }}</p>
+            <p><strong>Fecha de Factura:</strong> {{ orden.fecha_factura }}</p>
+            <p><strong>Fecha Contable:</strong> {{ orden.fecha_contable }}</p>
+            <p><strong>Banco Receptor:</strong> {{ orden.banco_receptor }}</p>
+            <p><strong>Total Importe:</strong> ${{ orden.total_orden }}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-4">
+        <div class="col">
+            <h4>Detalles del Proveedor</h4>
+            <p><strong>Proveedor:</strong> {{ proveedor.nombre_proveedor }}</p>
+            <p><strong>Contacto:</strong> {{ proveedor.contacto_proveedor }}</p>
+            <p><strong>Teléfono:</strong> {{ proveedor.telefono_proveedor }}</p>
+            <p><strong>Correo:</strong> {{ proveedor.email_proveedor }}</p>
+            <p class="mail">Tu Correo:</p>{{email}}
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-4">
+        <div class="col">
+            <h4><strong>Productos Agregados</strong></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th># ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                        <th>Recibido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto_solicitud in solicitud.productosolicitud_set.all %}
+                    <tr>
+                        <td>{{ producto_solicitud.producto.id }}</td>
+                        <td>{{ producto_solicitud.producto.nombre_producto }}</td>
+                        <td>{{ producto_solicitud.producto.descripcion_producto }}</td>
+                        <td>{{ producto_solicitud.cantidad }}</td>
+                        <td>${{ producto_solicitud.producto.precio_producto }}</td>
+                        <td>${{ producto_solicitud.subtotal }}</td>
+                        <td>{{ producto_solicitud.cantidad_recibida }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+

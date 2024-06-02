@@ -1,0 +1,50 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarProductoModalLabel">Editar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{error}}
+                <form  id="formularioProducto" action="/editarProducto/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{producto.id}}"> <!--se agrega un campo oculto para enviar el id del producto -->
+                    <div class="form-group">
+                        <input type="text" id="nombre_producto" name="nombre_producto" value="{{producto.nombre_producto}}" class="form-control" maxlength="50" required >
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="stock_producto" name="stock_producto" value="{{producto.stock_producto}}" class="form-control" required >
+                    </div>
+                    <div class="form-group">
+                        <select id="categoria_producto" name="categoria_producto" required>
+                            <option value="Herramienta" {% if producto.categoria_producto == 'Herramienta' %} selected {% endif %}>Herramienta</option>
+                            <option value="Material" {% if producto.categoria_producto == 'Material' %} selected {% endif %}>Material</option>
+                            <option value="Productos químicos" {% if producto.categoria_producto == 'Productos químicos' %} selected {% endif %}>Productos químicos</option>
+                            <option value="Electrodomésticos" {% if producto.categoria_producto == 'Electrodomésticos' %} selected {% endif %}>Electrodomésticos</option>
+                            <option value="Muebles" {% if producto.categoria_producto == 'Muebles' %} selected {% endif %}>Muebles</option>
+                            <option value="Productos electrónicos de consumo" {% if producto.categoria_producto == 'Productos electrónicos de consumo' %} selected {% endif %}>Productos electrónicos de consumo</option>
+                            <option value="Artículos para el hogar" {% if producto.categoria_producto == 'Artículos para el hogar' %} selected {% endif %}>Artículos para el hogar</option>
+                            <option value="Otros" {% if producto.categoria_producto == 'Otros' %} selected {% endif %}>Otros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="precio_producto" name="precio_producto" value="{{producto.precio_producto}}" class="form-control" required>
+                    </div>                       
+                    <div class="form-group">
+                        <input type="text" id="descripcion_producto" name="descripcion_producto" value="{{producto.descripcion_producto}}" class="form-control" maxlength="150" required>
+                    </div>                 
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url 'producto' %}" class="btn btn-primary">Cerrar</a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+                
+{% endblock %}

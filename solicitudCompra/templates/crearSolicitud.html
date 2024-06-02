@@ -1,0 +1,139 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Solicitud</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="solicitud">
+        <h2>Nueva solicitud</h2>
+        <div class="card">
+            <div class="card-body">
+                {{ error }}
+                <form action="{% url 'crear_solicitud' %}" method="POST" id="miFormulario">
+                    {% csrf_token %}
+                    <div class="form-container">
+                        <div class="form-solicitud">
+                            <label for="proveedores">Proveedores:</label>
+                            {{form.proveedores}}
+                        </div>
+                        <div class="form-solicitud">
+                            <label form="comprador">Comprador</label>
+                            {{form.comprador}}
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="estado">Estado</label>
+                            <select id="estado" name="estado" required>
+                                <option value="Solicitud de compra">Solicitud Compra</option>
+                                <option value="Orden de compra">Orden de compra</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-container">
+                        <div class="form-solicitud">
+                            <label for="fecha_de_espera">Fecha de espera</label>
+                            <input type="date" id="fecha_de_espera" name="fecha_de_espera" required> 
+                        </div>
+                        <div class="form-solicitud">
+                            <label form="fecha_creacion">Fecha de creación</label>
+                            {{form.fecha_creacion}}
+                        </div>
+                        <div class="form-solicitud">
+                            <label for="productos">Agregar Producto</label>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MaterialesModal">
+                            Agregar Producto
+                            </button>
+                        </div>
+                    </div>               
+                    <input type="hidden" name="productos" value="{{ productos_seleccionados_ids }}">
+                  
+                    <div class="form-group">
+                        <h4>Productos Agregados</h4>
+                        <table class="table table-bordered" id="productosSeleccionados">
+                            <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                           
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar Solicitud</button>
+                    <a href="{% url 'solicitudCompra' %}" class="btn btn-secondary">Volver</a> 
+                </form>          
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div id="MaterialesModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="MaterialesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="MaterialesModalLabel">Agregar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                                <th>Agregar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos_lista %}
+                            <tr>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.nombre_producto }}</td>
+                                <td>{{ producto.descripcion_producto }}</td>
+                                <td>{{ producto.stock_producto }}</td>       
+                                <td>${{ producto.precio_producto }}</td>      
+                                <td>
+                                    <button class="btn btn-primary" onclick="addProduct('{{ producto.id }}', '{{producto.nombre_producto}}', '{{ producto.descripcion_producto }}', '{{ producto.stock_producto }}', '{{ producto.precio_producto }}')">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<script src="{% static 'js/crearSolicitud.js' %}"></script>
+</body>
+
+{% endblock content %}

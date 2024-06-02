@@ -1,0 +1,40 @@
+
+{% load static %}
+{% block content %}
+<div class="modal fade" id="crearProveedorModal" tabindex="-1" aria-labelledby="crearProveedorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearProveedorModalLabel">Crear Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{error}}
+                <form action="{% url 'crearProveedor' %}" method="POST">
+                    {% csrf_token %}<!--se agrega el token de seguridad-->
+                    <div class="form-group">
+                        <input type="text" id="nombre_proveedor" name="nombre_proveedor" placeholder="Nombre" class="form-control" maxlength="50" required >
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="contacto_proveedor" name="contacto_proveedor" placeholder="Contacto" class="form-control" maxlength="50" required >
+                    </div>                   
+                    <div class="form-group">
+                        <input type="tel" id="telefono_proveedor" name="telefono_proveedor" placeholder="Teléfono" class="form-control" pattern="[0-9]+" required >
+                    </div>
+                    <div class="form-group">
+                        <textarea id="direccion_proveedor" name="direccion_proveedor" placeholder="Dirección" class="form-control" maxlength="300" required></textarea>
+                    </div>       
+                    <div class="form-group">
+                        <input type="email" id="email_proveedor" name="email_proveedor" placeholder="Correo" class="form-control" maxlength="60"  required>
+                    </div>                      
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url 'proveedor' %}" class="btn btn-primary">Cerrar</a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

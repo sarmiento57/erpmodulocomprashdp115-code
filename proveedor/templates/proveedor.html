@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Proveedores</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="contenedor">
+        <form method="GET" action="{% url 'buscarProveedor' %}">
+            <button type="submit" class=" btn btn-primary">Buscar</button>
+            <input type="text" name="q" placeholder="Nombre y Contacto" value="{{ request.GET.q }}" class="form-control">    
+        </form>
+        <a href="#" class="btn btn-primary crearProveedorBtn" data-url="{% url 'crearProveedor' %}">Agregar Proveedor</a>
+    </div>
+    <style>
+        .direccion {
+          width: 250px; 
+          word-wrap: break-word; 
+          white-space: pre-wrap;
+        }
+      </style>
+    <div class="titulo">
+        <h2>Listado de Proveedores</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Correo electrónico</th>
+                    <th colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in proveedores %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ c.nombre_proveedor }}</td>
+                    <td>{{ c.contacto_proveedor }}</td>
+                    <td>{{ c.telefono_proveedor }}</td>
+                    <td class="direccion">{{ c.direccion_proveedor }}</td>
+                    <td>{{ c.email_proveedor }}</td>
+                    <td>
+                        <a href="#" class="btn btn-info verProveedorBtn" data-url="{% url 'verProveedor' c.id %}"><i class="fa-solid fa-eye"></i></a>
+                        <a href="#" class="btn btn-success editarProveedorBtn" data-url="{% url 'edicionProveedor' c.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="{% url 'eliminarProveedor' c.id %}" class="btn btn-danger" onclick="return confirm('¿Estás seguro que quieres eliminarlo?')"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/modalProveedor.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+{% endblock %}
+

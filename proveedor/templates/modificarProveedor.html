@@ -1,0 +1,43 @@
+{% load static %}
+{% block content %}
+<div class="modal fade" id="crearProductoModal" tabindex="-1" aria-labelledby="crearProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearProductoModalLabel">Editar Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{error}}
+                <form  id="formularioProveedor" action="/editarProveedor/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{proveedor.id}}"> <!--se agrega un campo oculto para enviar el id del proveedor -->
+                    <div class="form-group">
+                        <input type="text" id="nombre_proveedor" name="nombre_proveedor" value="{{proveedor.nombre_proveedor}}" class="form-control" maxlength="50" required >
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="contacto_proveedor" name="contacto_proveedor" value="{{proveedor.contacto_proveedor}}" class="form-control" maxlength="50" required >
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="telefono_proveedor" name="telefono_proveedor" value="{{proveedor.telefono_proveedor}}" class="form-control" pattern="[0-9]+" required >
+                    </div>
+                    <div class="form-group">
+                        <textarea id="direccion_proveedor" name="direccion_proveedor" class="form-control" maxlength="300" required>{{proveedor.direccion_proveedor}}</textarea>
+                    </div>                       
+                    <div class="form-group">
+                        <input type="email" id="email_proveedor" name="email_proveedor" value="{{proveedor.email_proveedor}}" class="form-control" maxlength="60" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="fecha_creacion_proveedor" name="fecha_creacion_proveedor" value="{{ proveedor.fecha_creacion_proveedores|date:'Y-m-d H:i:s' }}" class="form-control" readonly>
+                    </div>
+                               
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url 'proveedor' %}" class="btn btn-primary">Volver</a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

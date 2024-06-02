@@ -1,0 +1,111 @@
+{% extends 'forms.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<div class="solicitud">
+    <h2>Detalles de la Solicitud</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-container">
+                <div class="form-solicitud">
+                    <label for="id">Referencia:</label>
+                    <div id="id" class="form-control">{{ solicitudCompra.referencia }}</div>
+                </div>
+                <div class="form-solicitud">
+                    <button type="button" data-toggle="modal" data-target="#emailModal">
+                    Enviar correo
+                    </button>
+                    <a href="{{ solicitud_pdf_url }}"><button>Solicitud PDF</button></a>
+                    <a href="{% url 'solicitudCompra' %}" ><button>Volver</button></a>
+                </div>
+            </div>
+            <div class="form-container">
+                <div class="form-solicitud">
+                    <label for="proveedores">Proveedor:</label>
+                    <div id="proveedores" class="form-control">{{ solicitudCompra.proveedores.nombre_proveedor }}</div>
+                </div>
+                <div class="form-solicitud">
+                    <label for="comprador">Comprador:</label>
+                    <div id="comprador" class="form-control">{{ solicitudCompra.comprador }}</div>
+                </div>
+                <div class="form-solicitud">
+                    <label for="estado">Estado:</label>
+                    <div id="estado" class="form-control">{{ solicitudCompra.estado }}</div>
+                </div>
+            </div>
+            <div class="form-container">
+                <div class="form-solicitud">
+                    <label for="fecha_de_espera">Fecha de Espera:</label>
+                    <div id="fecha_de_espera" class="form-control">{{ solicitudCompra.fecha_de_espera }}</div>
+                </div>
+                <div class="form-solicitud">
+                    <label for="fecha_creacion">Fecha de Creación:</label>
+                    <div id="fecha_creacion" class="form-control">{{ solicitudCompra.fecha_creacion }}</div>
+                </div>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <h4>Productos Seleccionados</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in solicitudCompra.productosolicitud_set.all %}
+                            <tr>
+                                <td>{{ producto.producto.id }}</td>
+                                <td>{{ producto.producto.nombre_producto }}</td>
+                                <td>{{ producto.producto.descripcion_producto }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                                <td>${{ producto.producto.precio_producto }}</td>
+                                <td>${{ producto.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="emailModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h4 class="modal-title">Enviar Correo</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        
+            <div class="modal-body">
+                <form method="post" action="{% url 'enviar_correo' pk %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+           
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock content %}

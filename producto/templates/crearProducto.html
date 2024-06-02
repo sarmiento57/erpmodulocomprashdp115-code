@@ -1,0 +1,68 @@
+
+{% load static %}
+{% block content %}
+
+            <!-- Modal -->
+            <div class="modal fade" id="crearProductoModal" tabindex="-1" aria-labelledby="crearProductoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crearProductoModalLabel">Crear Producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'crearProducto' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="text" id="nombre_producto" name="nombre_producto" placeholder="Nombre" class="form-control" maxlength="50" required >
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" id="stock_producto" name="stock_producto" placeholder="Stock" class="form-control" required>
+                                </div>                   
+                                <div class="form-group">
+                                        <select id="categoria_producto" name="categoria_producto" required>
+                                            <option value="">Seleccione una categoria</option>
+                                            <option value="Herramienta">Herramienta</option>
+                                            <option value="Material">Material</option>
+                                            <option value="Productos químicos">Productos químicos</option>
+                                            <option value="Electrodomésticos">Electrodomésticos</option>
+                                            <option value="Muebles">Muebles</option>
+                                            <option value="Productos electrónicos de consumo">Productos electrónicos de consumo</option>
+                                            <option value="Artículos para el hogar">Artículos para el hogar</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input type="text" id="precio_producto" name="precio_producto" placeholder="Precio" class="form-control" pattern="[0-9]+(\.[0-9]+)?" title="Ingrese un número válido, Ej $60.99" required>
+                                </div>  
+                                       
+                                <div class="form-group">
+                                    <input type="text" id="descripcion_producto" name="descripcion_producto" placeholder="Descripcion" class="form-control" maxlength="150" required>
+                                </div>    
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>                   
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                
+                var precioInput = document.getElementById("precio_producto");
+            
+                
+                precioInput.addEventListener("input", function(event) {
+                    
+                    var valor = this.value;
+                    
+                    
+                    valor = valor.replace(/,/g, '');
+            
+                 
+                    this.value = valor;
+                });
+            </script>
+{% endblock content %}

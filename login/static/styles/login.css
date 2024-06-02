@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    background-color: #c9f6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9f6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.contenedor {
+    position: relative;
+    width: 100%; 
+    max-width: 768px;
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .35);
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+    display: flex;
+    min-height: 480px;
+    justify-content: flex-end;
+    padding-right: 50px;
+    align-items: center;
+    background-color: white;
+}
+
+.imagen img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    object-fit: auto;
+    z-index: -1;
+    border-radius: 30px;
+}
+
+.imagen h3 {
+    color: rgb(255, 255, 255);
+    font-size: 1.5rem;
+    position: absolute;
+    top: 32%;
+    left: 81px;
+}
+
+.contenedor h2 {
+    color: rgb(0, 0, 0);
+    font-size: 2.3rem;
+    text-align: center;
+}
+
+.contenedor p {
+    position: absolute;
+    top: 10px;
+    left: 57%;
+    right: 50px;
+    font-size: .8rem;
+    color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.384);
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    animation: fadeOut 15s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.input-contenedor {
+    position: relative;
+    width: 300px;
+    margin: 30px 0;
+    background-color: #cc99ff5d;
+    outline: none;
+    border-radius: 5px;
+}
+
+.input-contenedor label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: .6s;
+    font-family: bold;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    top: -10px;
+}
+
+.input-contenedor input {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: - 35px 0 5px;
+    color: rgb(0, 0, 0);
+}
+
+.input-contenedor i {
+    position: absolute;
+    right: 8px;
+    top: 19%;
+    color: rgb(0, 0, 0);
+    font-size: 1.6rem;
+}
+
+.olvidar {
+    color: rgb(0, 0, 0);
+    font-size: .9rem;
+    display: flex;
+    margin-top: -15px 0 15px;
+    justify-content: center;
+}
+
+.olvidar a {
+    color: rgb(0, 0, 0);
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    height: 45px;
+    border-radius: 40px;
+    background: #cc99ff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    transition: .4s;
+    margin-top: 20px;
+}
+
+button:hover {
+    opacity: .5;
+}
+
+@media only screen and (max-width: 768px) {
+    .contenedor {
+        padding-right: 0; 
+        justify-content: center;
+    }
+    
+    .imagen h3 {
+        display: none; 
+    }
+    .imagen img {
+        display: none; 
+    }
+}
+
+.error-box {
+    position: fixed;
+    top: 0;
+    right: -300px; 
+    width: 280px;
+    padding: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    animation: slideIn 0.5s forwards; 
+  }
+
+ 
+  @keyframes slideIn {
+    from {
+      right: -300px; 
+    }
+    to {
+      right: 10px; 
+    }
+  }

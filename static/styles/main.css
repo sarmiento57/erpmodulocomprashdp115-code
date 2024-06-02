@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/*Formularios y listados*/
+.titulo{
+    text-align: left;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.contenedor{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    gap: 10px; 
+}
+.contenedor input{
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    margin-top: 11px;
+    
+}
+
+.contenedor form {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: #001aff;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.875rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: #ffffff;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.btn-primary:hover,
+.btn-info:hover,
+.btn-danger:hover,
+.btn-success:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Define active state for better feedback */
+.btn-primary:active,
+.btn-info:active,
+.btn-danger:active,
+.btn-success:active {
+    transform: translateY(0) scale(1);
+    box-shadow: none;
+}
+
+/* Optional: Add focus styles for better accessibility */
+.btn-primary:focus,
+.btn-info:focus,
+.btn-danger:focus,
+.btn-success:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Forms edit y add */
+
+
+.row{
+    display: flex;
+    justify-content: center;
+    flex: 0 0 50%;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row h2{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-align: center;
+    background-color: #111011a9;
+    box-shadow: 0 5px 15px rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 15px;
+    color: #ffffff; 
+}
+
+.card{
+    background-color: #f8f9fa;
+    border: 1px solid rgba(26, 24, 24, 0.041);
+    border-radius: 5px;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgb(0, 0, 0);
+}
+.form-group{ 
+    display: flex;
+    justify-content: center;  
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    margin-top: 15px;
+    
+} 
+
+.form-group button,
+.form-group a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+}
+
+.form-group button:hover,
+.form-group a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Table Responsive Styles */
+.table-responsive {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-responsive th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.table-responsive td {
+    font-size: 0.9rem;
+}
+
+.table-responsive tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-responsive tr:hover {
+    background-color: #e9ecef;
+}
+
+
+
+
+/* base.html */
+.derecha{
+    margin-left: auto; 
+}
+
+.navbar{
+    background-color:rgba(19, 18, 18, 0.103);;
+}
+
+.nav-item {
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: rgba(48, 44, 44, 0.712);
+    transition: color 0.3s;
+}
+
+.nav-item.active .nav-link {
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    cursor: pointer;
+    background: #201f1f63;
+}
+
+
+
+
+
+.nav-item a{
+    color: rgba(48, 44, 44, 0.712);
+    transition: color 0.3s;
+}
+
+.nav-item a:hover{
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    cursor: pointer;
+    background: hsla(0, 93%, 45%, 0.836);
+    
+}
+
+
+
+
+.navbar-nav{
+    margin-left: 2px;
+}
+
+.navbar-nav button{
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: rgba(48, 44, 44, 0.712);
+    
+}
+
+.navbar-nav button:hover{
+    color: black;
+    background: hsla(0, 93%, 45%, 0.836);
+    
+}
+
+.navbar-nav z{
+    color: black;
+}
+.navbar-nav z:hover{
+    color: black;
+}
+
+.form-group label{
+        display: flex;
+        margin-bottom: 5px;
+        font-size: 1rem;
+        width: 100px; 
+        justify-content: flex-end; 
+        margin-right: 10px;
+}
+
+.form-group div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+}
+
+
+.dropdown-menu {
+    background-color: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-right: 50px;
+}

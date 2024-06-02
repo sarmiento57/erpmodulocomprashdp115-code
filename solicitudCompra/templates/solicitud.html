@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="contenedor">
+    <form method="GET" action="{% url 'buscarSolicitud' %}">
+        <button type="submit" class=" btn btn-primary">Buscar</button>
+        <input type="text" name="q" placeholder="Buscar por estado" value="{{ request.GET.q }}" class="form-control">    
+    </form>
+    <a href="{% url 'crear_solicitud' %}" class="btn btn-primary">Nuevo</a>
+</div>
+<div class="titulo">
+   <h2>Solicitudes de Compra</h2>
+</div>
+<body>
+<div class="table-responsive">
+   <table class="table table-striped">
+       <thead>
+           <tr>
+               <th>Referencia</th><!-- cabecera de las tablas-->
+               <th>Comprador</th>
+               <th>Proveedor</th>
+               <th>Estado</th>
+               <th>Fecha de Espera</th>
+               <th>Fecha de Creación</th>
+               <th>Autualización</th>
+               <th colspan="2">Acciones</th>
+           </tr>
+       </thead>
+       <tbody>
+           <!-- Loop through the list of solicitudes and display the data -->
+           {% for c in solicitudes %}
+           <tr>
+               <td>{{ c.referencia }}</td>
+               <td>{{ c.comprador }}</td>
+               <td>
+                {{ c.proveedores}}
+               </td>
+               <td>{{ c.estado }}</td>
+               <td>{{ c.fecha_de_espera }}</td>
+               <td>{{ c.fecha_creacion.date }}</td>
+               <td>{{ c.fecha_actualizacion.date}}</td>
+               <td>
+                <a href="{% url 'detalles_solicitud' c.id%}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                <a href="{% url 'edicion_solicitud' c.id%}" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'eliminarSolicitud' c.id %}" class="btn btn-danger" onclick="return confirm('¿Estás seguro que quieres eliminarlo')"><i class="fa-solid fa-trash"></i></a>
+               </td>
+           </tr>
+           {% endfor %}
+       </tbody>
+   </table>
+</div>   
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!--se agrega la libreria de sweetAlert2-->
+</body>    
+{% endblock %}

@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.solicitud{
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    
+}
+.img-pagado {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+.img-pagado img {
+    max-width: 230px; 
+    height: auto;
+}
+
+
+.solicitud h2{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #111011a9;
+    box-shadow: 0 5px 15px rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 10px;
+    color: #ffffff; 
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-solicitud {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.form-solicitud label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.form-solicitud input,
+.form-solicitud select{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    display: block;
+    margin-right: 10px;
+}
+
+
+
+.form-button button:hover,
+.form-button a:hover {
+    background-color: #111011a9;
+    color: #ffffff;
+}
+
+.form-container div{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    display: block;
+    margin-right: 10px;
+
+        
+}
+
+.form-solicitud p{
+    font-size: 1rem;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex: 1;
+    
+}
+
+.form-solicitud button{
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-solicitud button:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #111011a9;
+    color: white;
+}
+
+
+.form-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-button button,
+.form-button a {
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.692);
+    background-repeat: auto;
+    background-color: rgba(122, 178, 211, 0.356);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-button button:hover,
+.form-button a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #111011a9;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
